@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>TradeSlope chart smoke test</title>
+<body>
+<iframe title="Chart under test" style="width:1100px;height:650px" src="index.html"></iframe>
+<pre id="result">PENDING</pre>
+<script>
+  // Test harness only; not loaded by the card. Serve over localhost for same-origin access.
+  const frame = document.querySelector("iframe");
+  frame.onload = async () => {
+    if (frame.contentWindow.location.href === "about:blank") return;
+    const results = [];
+    const check = (name, value) => {
+      if (!value) throw new Error(name);
+      results.push(name);
+    };
+    const wait = () => new Promise(resolve => setTimeout(resolve, 200));
+    try {
+      const win = frame.contentWindow;
+      const doc = win.document;
+      const api = win.TradeSlopeChart;
+      await api.ready;
+      check("standalone demo without injected SDK", !win.TradeSlope &&
+        doc.querySelector(".badge").textContent === "DEMO");
+      check("ready and canvas", doc.querySelector("canvas") && doc.querySelector("#fallback").hidden);
+      check("version", api.version === "2.6.7");
+      const root = doc.querySelector(".oac-widget");
+      api.setTheme("light");
+      check("light theme", doc.documentElement.dataset.theme === "light" && api.getState().theme === "light");
+      api.setTheme("dark");
+      check("dark theme", doc.documentElement.dataset.theme === "dark");
+      api.setSymbol("test <label>");
+      check("safe symbol label", api.getState().symbol === "TEST <LABEL>" &&
+        doc.querySelector("#description").textContent.includes("TEST <LABEL>"));
+      check("widget not recreated", root === doc.querySelector(".oac-widget"));
+      let invalid = false;
+      try { api.setTheme("bad"); } catch { invalid = true; }
+      check("invalid theme rejected", invalid);
+      invalid = false;
+      try { api.setSymbol(""); } catch { invalid = true; }
+      check("invalid symbol rejected", invalid);
+      const longSymbol = "A".repeat(81);
+      api.setSymbol(longSymbol);
+      check("page symbol length accepted", api.getState().symbol === longSymbol);
+      api.setSymbol("TEST <LABEL>");
+      const findButton = pattern => Array.from(doc.querySelectorAll("button")).find(button =>
+        pattern.test(`${button.title} ${button.textContent} ${button.getAttribute("aria-label")}`));
+      const indicators = findButton(/indicators/i);
+      check("indicator control", indicators);
+      indicators.click();
+      await wait();
+      check("indicator picker opens", doc.querySelector('[role="dialog"]'));
+      doc.dispatchEvent(new win.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+      const settings = findButton(/chart settings/i);
+      check("settings control", settings);
+      settings.click();
+      await wait();
+      check("settings opens", doc.querySelector('[role="dialog"]'));
+      doc.dispatchEvent(new win.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+      frame.style.width = "360px";
+      frame.style.height = "420px";
+      await wait();
+      check("responsive narrow size", doc.querySelector(".card").getBoundingClientRect().width === 360 &&
+        doc.documentElement.scrollWidth === 360);
+      check("no runtime fallback", doc.querySelector("#fallback").hidden);
+      check("local resources only", win.performance.getEntriesByType("resource").every(entry =>
+        new URL(entry.name).origin === win.location.origin));
+      check("drawing rail mounted", doc.querySelector(".oac-rail"));
+      win.dispatchEvent(new win.PageTransitionEvent("pagehide"));
+      check("pagehide destroys widget", !doc.querySelector(".oac-widget"));
+      api.dispose();
+      document.querySelector("#result").textContent = `PASS: ${results.join("; ")}`;
+    } catch (error) {
+      document.querySelector("#result").textContent = `FAIL: ${error.stack}; passed ${results.join("; ")}`;
+    }
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>TradeSlope — Bars chart</title>
+  <link rel="stylesheet" href="card.css">
+  <style>
+    /* The mapping owns data selection; retain chart style/indicator controls. */
+    html[data-hosted="true"] .oac-sym,
+    html[data-hosted="true"] .oac-mobile__symbol { display: none !important; }
+  </style>
+  <script defer src="vendor/openalgo-charts.standalone.js"></script>
+  <script defer src="vendor/openalgo-charts.draw.standalone.js"></script>
+  <script defer src="vendor/openalgo-charts.indicators.standalone.js"></script>
+  <script defer src="vendor/openalgo-charts.widget.standalone.js"></script>
+  <script defer src="card.js"></script>
+</head>
+<body>
+  <main class="card" aria-label="Bars chart card">
+    <header class="card-header">
+      <strong>TradeSlope <span class="badge">UNBOUND</span></strong>
+      <span id="description">Bars input · Waiting for initialization</span>
+    </header>
+    <div id="chart" aria-label="Interactive Bars input chart"></div>
+    <p id="fallback" role="status">Loading local chart… If this remains visible, check that local scripts are accessible.</p>
+    <noscript>This chart requires JavaScript enabled in the webview.</noscript>
+  </main>
+</body>
+</html>

@@ -1,0 +1,10 @@
+[package]
+name = "tradeslope-native-sdk"
+version = "0.1.0"
+edition = "2024"
+description = "Host contracts for native TradeSlope GPUI cards"
+license = "MIT"
+
+[dependencies]
+gpui-kit = { version = "0.8.0", features = ["gpui-fast"] }
+tradeslope-sdk = { path = "../extension-sdk" }

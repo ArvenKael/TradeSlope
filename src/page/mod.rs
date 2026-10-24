@@ -1,30 +1,34 @@
-pub mod trade;
+pub mod builder;
 pub mod welcome;
+
+pub mod drag;
+pub mod workspace;
 
 pub type PageId = usize;
 
 pub struct WorkspacePage {
     pub id: PageId,
     pub name: String,
-    pub symbol: String,
-    pub cards: Vec<CardKind>,
+    pub workspace: workspace::Workspace,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 pub enum CardKind {
-    Chart,
-    Watchlist,
-    Orders,
-    Positions,
+    Native(String),
+    JavaScript(String),
 }
 
 impl CardKind {
     pub fn title(self) -> &'static str {
         match self {
-            Self::Chart => "Chart",
-            Self::Watchlist => "Watchlist",
-            Self::Orders => "Orders",
-            Self::Positions => "Positions",
+            Self::Native(_) => "Native card",
+            Self::JavaScript(_) => "JavaScript card",
+        }
+    }
+
+    pub fn extension_id(&self) -> Option<&str> {
+        match self {
+            Self::Native(id) | Self::JavaScript(id) => Some(id),
         }
     }
 }

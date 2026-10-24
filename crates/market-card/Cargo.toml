@@ -1,0 +1,12 @@
+[package]
+name = "tradeslope-market-card"
+version = "0.1.0"
+edition = "2024"
+description = "Native GPUI market overview card for TradeSlope"
+license = "MIT"
+
+[dependencies]
+tradeslope-native-sdk = { path = "../native-sdk" }
+tradeslope-sdk = { path = "../extension-sdk" }
+gpui-kit = { version = "0.8.0", features = ["gpui-fast"] }
+serde_json = "1"

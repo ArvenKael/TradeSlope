@@ -1,0 +1,16 @@
+[package]
+name = "tradeslope-ourbit"
+version = "0.1.0"
+edition = "2024"
+description = "Blocking Ourbit spot and futures backend for TradeSlope"
+
+[dependencies]
+tradeslope-sdk = { path = "../extension-sdk" }
+tradeslope-provider-process = { path = "../provider-process" }
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls"] }
+serde = "1"
+serde_json = { version = "1", features = ["arbitrary_precision"] }
+hmac = "0.12"
+sha2 = "0.10"
+url = "2"
+httpdate = "1"

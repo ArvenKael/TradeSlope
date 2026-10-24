@@ -1,5 +1,7 @@
 mod app;
 mod assets;
+mod extension_manager;
+mod extensions;
 mod page;
 mod theme;
 mod ui;

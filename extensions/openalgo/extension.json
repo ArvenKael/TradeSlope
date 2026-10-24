@@ -1,0 +1,71 @@
+{
+  "format_version": 1,
+  "id": "openalgo.chart",
+  "title": "OpenAlgo Charts",
+  "version": "1.0.0",
+  "kind": "javascript",
+  "entry": "index.html",
+  "card": {
+    "id": "openalgo.chart",
+    "title": "OpenAlgo Charts",
+    "renderer": "java_script",
+    "inputs": [
+      {
+        "id": "bars",
+        "title": "Main price",
+        "kind": "query",
+        "required": true,
+        "parameters": {
+          "type": "object",
+          "fields": {
+            "interval": { "schema": { "type": "enum", "values": ["1m", "5m", "15m", "30m", "1h", "4h", "1d"] }, "required": true, "default": "1h" },
+            "end": { "schema": { "type": "integer" }, "description": "Inclusive historical end time in UTC seconds" },
+            "limit": { "schema": { "type": "integer" }, "description": "Requested page size; provider bounds apply" }
+          }
+        },
+        "output": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "fields": {
+              "time": { "schema": { "type": "integer" }, "required": true },
+              "open": { "schema": { "type": "number" }, "required": true },
+              "high": { "schema": { "type": "number" }, "required": true },
+              "low": { "schema": { "type": "number" }, "required": true },
+              "close": { "schema": { "type": "number" }, "required": true },
+              "volume": { "schema": { "type": "number" }, "required": true }
+            }
+          }
+        }
+      },
+      {
+        "id": "comparison",
+        "title": "Comparison",
+        "kind": "query",
+        "required": false,
+        "parameters": {
+          "type": "object",
+          "fields": {
+            "interval": { "schema": { "type": "enum", "values": ["1m", "5m", "15m", "30m", "1h", "4h", "1d"] }, "required": true, "default": "1h" },
+            "end": { "schema": { "type": "integer" }, "description": "Inclusive historical end time in UTC seconds" },
+            "limit": { "schema": { "type": "integer" }, "description": "Requested page size; provider bounds apply" }
+          }
+        },
+        "output": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "fields": {
+              "time": { "schema": { "type": "integer" }, "required": true },
+              "open": { "schema": { "type": "number" }, "required": true },
+              "high": { "schema": { "type": "number" }, "required": true },
+              "low": { "schema": { "type": "number" }, "required": true },
+              "close": { "schema": { "type": "number" }, "required": true },
+              "volume": { "schema": { "type": "number" }, "required": true }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "entry": "index.html",
+  "card": {
+    "id": "example.quote",
+    "title": "SDK quote example",
+    "renderer": "java_script",
+    "inputs": [{
+      "id": "quote",
+      "title": "Quote",
+      "kind": "query",
+      "parameters": { "type": "object", "fields": {} },
+      "output": {
+        "type": "object",
+        "fields": {
+          "symbol": { "schema": { "type": "string" }, "required": true, "description": "Symbol", "default": null },
+          "last": { "schema": { "type": "number" }, "required": true, "description": "Last price", "default": null },
+          "bid": { "schema": { "type": "nullable", "inner": { "type": "number" } }, "required": true, "description": "Bid price", "default": null },
+          "ask": { "schema": { "type": "nullable", "inner": { "type": "number" } }, "required": true, "description": "Ask price", "default": null },
+          "volume": { "schema": { "type": "nullable", "inner": { "type": "number" } }, "required": true, "description": "Volume", "default": null }
+        }
+      },
+      "required": true
+    }, {
+      "id": "comparison",
+      "title": "Comparison (optional)",
+      "kind": "query",
+      "parameters": { "type": "object", "fields": {} },
+      "output": {
+        "type": "object",
+        "fields": {
+          "symbol": { "schema": { "type": "string" }, "required": true, "description": "Symbol", "default": null },
+          "last": { "schema": { "type": "number" }, "required": true, "description": "Last price", "default": null },
+          "bid": { "schema": { "type": "nullable", "inner": { "type": "number" } }, "required": true, "description": "Bid price", "default": null },
+          "ask": { "schema": { "type": "nullable", "inner": { "type": "number" } }, "required": true, "description": "Ask price", "default": null },
+          "volume": { "schema": { "type": "nullable", "inner": { "type": "number" } }, "required": true, "description": "Volume", "default": null }
+        }
+      },
+      "required": false
+    }]
+  }
+}

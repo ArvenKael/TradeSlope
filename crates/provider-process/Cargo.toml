@@ -1,0 +1,27 @@
+[package]
+name = "tradeslope-provider-process"
+version = "0.1.0"
+edition = "2024"
+description = "Trusted executable provider adapter with bounded JSONL stdio"
+autotests = false
+
+[features]
+test-fixture = []
+
+[[bin]]
+name = "provider-process-fixture"
+path = "tests/fixture/main.rs"
+required-features = ["test-fixture"]
+
+[[test]]
+name = "process"
+path = "tests/process.rs"
+required-features = ["test-fixture"]
+
+[dependencies]
+tradeslope-sdk = { path = "../extension-sdk" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"

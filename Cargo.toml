@@ -3,5 +3,29 @@ name = "tradeapp"
 version = "0.1.0"
 edition = "2024"
 
+[workspace]
+members = [
+    "crates/extension-sdk",
+    "crates/native-sdk",
+    "crates/market-card",
+    "crates/ourbit",
+    "crates/provider-process",
+    "crates/package-sdk",
+]
+resolver = "2"
+
 [dependencies]
-gpui-kit = "0.8.0"
+gpui-kit = { version = "0.8.0", features = ["gpui-fast"] }
+gpui-webview = { version = "0.8.0", features = ["gpui-fast"] }
+serde_json = "1"
+serde = { version = "1", features = ["derive"] }
+tradeslope-sdk = { path = "crates/extension-sdk" }
+tradeslope-native-sdk = { path = "crates/native-sdk" }
+tradeslope-package-sdk = { path = "crates/package-sdk" }
+tradeslope-provider-process = { path = "crates/provider-process" }
+wry = { package = "lb-wry", version = "0.53.3" }
+
+[dev-dependencies]
+tempfile = "3"
+rust-embed = { version = "8.13.0", features = ["debug-embed"] }
+tradeslope-market-card = { path = "crates/market-card" }
